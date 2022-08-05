@@ -172,7 +172,7 @@ def add_points(username, additional_points):
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
         update_users = """
-        # need to add point to current point in table but do not want to make new column
+        # need to add points to current point in table but do not want to make new column
         UPDATE user SET current_points = current_points + {additional_pints} WHERE user_id/name = {username}  ???? - need to check this 
         """.format(username=username, additional_points=additional_points)
         cur.execute(update_users)
