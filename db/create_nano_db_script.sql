@@ -22,6 +22,31 @@ VALUES
 (5, 'Tracey', 'James', 3, 300),
 (6, 'Chris', 'Bailey', 2, 200);
 
+USE nano;
+
+ALTER TABLE investors_info
+ADD currency VARCHAR(15);
+
+UPDATE investors_info
+SET currency = 'BTC'
+WHERE investor_id = 1;
+
+UPDATE investors_info
+SET currency = 'ETH'
+WHERE investor_id = 2;
+
+UPDATE investors_info
+SET currency = 'XRP'
+WHERE investor_id = 3;
+
+UPDATE investors_info
+SET currency = 'BNB'
+WHERE investor_id = 4;
+
+UPDATE investors_info
+SET currency = 'BTC'
+WHERE investor_id = 5;
+
 -- stored procedure to fill data on investors
 
 DELIMITER $$
