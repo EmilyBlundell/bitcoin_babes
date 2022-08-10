@@ -15,12 +15,12 @@ CONSTRAINT PK_trader_info PRIMARY KEY (investor_ID));
 -- inserting dummy data
 INSERT INTO investors_info
 VALUES
-(1,'John','Smith', 6, 600),
-(2, 'Kate', 'Booker', 9, 900),
-(3, 'Shannon', 'Burton', 7, 700),
-(4, 'Joshua', 'Medley', 4, 400),
-(5, 'Tracey', 'James', 3, 300),
-(6, 'Chris', 'Bailey', 2, 200);
+(1,'John','Smith', 6, 600, 'BTC'),
+(2, 'Kate', 'Booker', 9, 900, 'ETH'),
+(3, 'Shannon', 'Burton', 7, 700, 'BNB'),
+(4, 'Joshua', 'Medley', 4, 400, 'BNB'),
+(5, 'Tracey', 'James', 3, 300, 'XRP'),
+(6, 'Chris', 'Bailey', 2, 200, 'ETH');
 
 USE nano;
 
