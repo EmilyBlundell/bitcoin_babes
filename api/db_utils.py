@@ -1,5 +1,6 @@
 import mysql.connector
-from api.config import USER, PASSWORD, HOST
+from config import HOST, USER, PASSWORD
+
 
 
 class DbConnectionError(Exception):
@@ -15,13 +16,33 @@ def _connect_to_db(db_name):
     )
     return connect
 
+def get_all():
+    try:
+        nanodb = _connect_to_db('nano')
+        print('Connection opened')
+        cur = nanodb.cursor()
+        cur.execute("SELECT * FROM investors_info")
+        result = cur.fetchall()
+
+        for i in result:
+            print(i)
+    except Exception:
+        raise DbConnectionError("Unable to connect to database")
+    finally:
+        if nanodb:
+            nanodb.close()
+            print("connection closed") 
+
+
 def _map_values(traders):
     mapped = []
     for profile in traders:
         print(profile)
         mapped.append({
-            'name': item[0],
-            # add list of column names and item[] separated by commas - refer to SQL table structure
+            'investor_first_name',
+            'investor_last_name',
+            'current_score',
+            'crypto_balance',
         })
     return mapped
 
@@ -30,7 +51,7 @@ def get_best_trader():
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
-        query = """ SELECT investor_id, current_score
+        query = """ SELECT investor_id, investor_first_name, investor_last_name, current_score
 FROM investors_info
 WHERE current_score IN (SELECT MAX(current_score)
 						FROM investors_info);"""
@@ -47,12 +68,13 @@ WHERE current_score IN (SELECT MAX(current_score)
 
     return best_trader
 
+
 # Gets the trader/ traders with the lowest score
 def get_worst_trader():
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
-        query = """ SELECT investor_id, current_score
+        query = """ SELECT investor_id, investor_first_name, investor_last_name, current_score
 FROM investors_info
 WHERE current_score IN (SELECT MIN(current_score)
 						FROM investors_info);"""
@@ -74,7 +96,7 @@ def display_all_traders():
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
-        query = """ SELECT investor_id, current_score, crypto_balance
+        query = """ SELECT investor_id, investor_first_name, investor_last_name, current_score, crypto_balance
             FROM investors_info;"""
         cur.execute(query)
 
@@ -89,47 +111,6 @@ def display_all_traders():
 
     return all_traders
 
-### need to make an id variable ###
-def get_trader_stat(id):
-    try:
-        nanodb = _connect_to_db('nano')
-        cur = nanodb.cursor()
-        query = """ SELECT investor_id, current_score, crypto_balance
-        FROM investors_info
-        WHERE investor_id = {}; """.format(id)
-        cur.execute(query)
-
-        trader_stat = _map_values(cur.fetchall())
-
-    except Exception:
-        raise DbConnectionError("Failed to connect to the database")
-    finally:
-        if nanodb:
-            nanodb.close()
-            print('Connection Closed')
-
-    return trader_stat
-
-
-def get_trader_group(trader_score):
-    try:
-        nanodb = _connect_to_db('nano')
-        cur = nanodb.cursor()
-        query = """ SELECT investor_id, current_score
-        FROM investors_info
-        WHERE current_score = {};""".format(trader_score)
-        cur.execute(query)
-
-        all_traders = _map_values(cur.fetchall())
-
-    except Exception:
-        raise DbConnectionError("Failed to connect to the database")
-    finally:
-        if nanodb:
-            nanodb.close()
-            print('Connection Closed')
-
-    return all_traders
 
 ### earlier used trader_score as variable
 def add_trader(id, first, last, score, crypto):
@@ -150,3 +131,12 @@ def add_trader(id, first, last, score, crypto):
 
 if __name__ == '__main__':
    print( display_all_traders())
+
+def main():
+    get_all()
+    get_best_trader()
+    get_worst_trader()
+    display_all_traders()
+    add_trader()
+if __name__ == "__main__":
+    main()
