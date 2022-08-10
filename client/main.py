@@ -33,6 +33,7 @@ def add_trader(first, last, score, crypto):
 
     return result.json()
 
+
 def run():
     print('############################')
     print('Welcome to Test Trade, the add-on for validating trading prowess')
@@ -42,37 +43,51 @@ def run():
     initial_crypto = 100
 
     print('Welcome to the trading simulator\nYou have 100 units of Bitcoin (BTC) to start trading with')
+    print('############################')
+    print()
 
     first = input('Please enter your first name')
     last = input('Please enter your last name')
+    print('############################')
+    print()
 
-    #a = investment('BTC', 50)
+    currency, amount = switch_currency(initial_crypto, 'BTC')
+    print('############################')
+    print()
 
-    #first_play = switch_currency(initial_crypto)
+    stock = investment(currency, amount)
 
-    #print(type(first_play))
-
-    #currency, amount = first_play
-
-    stock = investment(switch_currency(initial_crypto))
-
-    #a.gamble()
-
-    #a.fluctuate()
+    stock.fluctuate()
+    print('############################')
+    print()
 
     stock.gamble()
+    print('############################')
+    print()
 
-    a.fluctuate()
+    stock.fluctuate()
+    print('############################')
+    print()
 
-    a.free_crypto()
+    stock.free_crypto()
+    print('############################')
+    print()
 
-    print(f'After market fluctuations your final amount of {a.currency} is {a.amount}')
+    print(f'After market fluctuations and gambling your final amount of {stock.currency} is {stock.amount}')
+    print('############################')
+    print()
 
-    print(f'You final score on this simulator is {a.score} meaning you have earnt {a.crypto} units of {a.currency}')
+    print(f'You final score on this simulator is {stock.score} meaning you have earnt {stock.crypto} units of {stock.currency}')
+    print('############################')
+    print()
 
     new_trader = namedtuple('trader', ['first', 'last', 'score', 'crypto', 'currency'])
 
-    newest_trader = new_trader(first, last, a.score, a.crypto, a.currency)
+    newest_trader = new_trader(first, last, stock.score, stock.crypto, stock.currency)
+
+    print(f'Welcome new trader\nYour registration details are as follows: {newest_trader}')
+    print('############################')
+    print()
 
 
 
