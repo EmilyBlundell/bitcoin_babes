@@ -114,7 +114,6 @@ def display_all_traders():
     return all_traders
 
 
-# earlier used trader_score as variable
 def add_trader(id, first, last, score, crypto):
     try:
         nanodb = _connect_to_db('nano')
@@ -152,6 +151,31 @@ def get_trader_stat(investor_id):
 
     return trader_stat
 
+def get_recent_id():
+    try:
+        nanodb = _connect_to_db('nano')
+        cur = nanodb.cursor()
+        query = """SELECT investor_id
+                FROM investors_info
+                ORDER BY investor_id desc
+                limit 1; """
+
+        cur.execute(query)
+        result = cur.fetchall()
+
+        for i in result:
+            for j in i:
+                last_id = j
+
+    except Exception:
+        raise DbConnectionError("Failed to connect to the database")
+    finally:
+        if nanodb:
+            nanodb.close()
+            print('Connection Closed')
+
+    return last_id
+
 
 def main():
     print(get_all())
@@ -160,6 +184,7 @@ def main():
     print(display_all_traders())
     print(add_trader())
     print(get_trader_stat())
+    print(get_recent_id())
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ import requests
 import json
 from simulator import *
 from collections import namedtuple
+from api.db_utils import get_recent_id
 
 
 def get_best_or_worst():
@@ -71,6 +72,7 @@ def get_trader_stat(investor_id):
 #     return result.json()
 
 
+
 def run():
     print('############################')
     print('Welcome to Test Trade, the add-on for validating trading prowess')
@@ -121,10 +123,12 @@ def run():
     print()
 
     new_trader = namedtuple(
-        'trader', ['first', 'last', 'score', 'crypto', 'currency'])
+        'trader', ['id','first', 'last', 'score', 'crypto', 'currency'])
+
+    new_id = get_recent_id() + 1
 
     newest_trader = new_trader(
-        first, last, stock.score, stock.crypto, stock.currency)
+        new_id, first, last, stock.score, stock.crypto, stock.currency)
 
     print(
         f'Welcome new trader\nYour registration details are as follows: {newest_trader}')
@@ -155,6 +159,7 @@ def views():
 
 if __name__ == '__main__':
     run()
+
     views()
 
 # if run():
