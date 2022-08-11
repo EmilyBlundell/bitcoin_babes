@@ -12,6 +12,7 @@ def index():
 
 @app.route('/leader/<selection>')
 def get_best_or_worst(selection):
+    selection = selection.casefold()
     if selection == 'best':
         trader = dbutils.get_best_trader()
         return jsonify(trader)
@@ -38,10 +39,20 @@ def new_trader():
 def get_user_info():
     trader = request.get_json()
     dbutils.get_trader_stat(
-        ranking=trader['ranking'],
         investor_id=trader['investor_id'],
         first_name=trader['First_name'],
         score=trader['score']
+    )
+    return trader
+
+
+@app.route('/allinvestors')
+def get_all_investors():
+    trader = request.get_json()
+    dbutils.display_all_traders(
+        investor_id=trader['investor_id'],
+        first_name=trader['First_name'],
+        score=trader['current_score']
     )
     return trader
 

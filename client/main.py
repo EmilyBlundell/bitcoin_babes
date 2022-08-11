@@ -4,47 +4,71 @@ from simulator import *
 from collections import namedtuple
 
 
-def get_best_trader(selection):
+def get_best_or_worst():
     result = requests.get(
-        '127.0.0.1:5000/leader/{}'.format(selection),
+        '127.0.0.1:5000/leader/best',
         headers={'content-type': 'application/json'})
     return result.json()
 
 
-def get_worst_trader(selection):
+def get_worst_trader():
     result = requests.get(
-        '127.0.0.1:5000/leader/{}'.format(selection),
+        '127.0.0.1:5000/leader/worst',
         headers={'content-type': 'application/json'})
     return result.json()
 
+# def get_best_or_worst(selection):
+#     selection = selection.casefold()
+#     if selection == 'best':
+#         result_best = requests.get(
+#             '127.0.0.1:5000/leader/best',
+#             headers={'content-type': 'application/json'})
+#         return result_best.json()
+#     elif selection == 'worst':
+#         result_worst = requests.get(
+#             '127.0.0.1:5000/leader/worst',
+#             headers={'content-type': 'application/json'})
+#         return result_worst.json()
+#     else:
+#         return
 
-def display_all_traders():
-    pass
+
+def display_all_traders(records):
+    # Print the names of the columns.
+    print("{:<15} {:<15} {:<15} ".format(
+        'investor ID', 'current score', 'crypto balance'))
+    print('-' * 105)
+
+    # print each data item.
+    for item in records:
+        print("{:<15} {:<15} {:<15} {:<15} ".format(
+            item['investor_id'], item['current_score'], item['crypto_balance']
+        ))
 
 
-def get_trader_stat(name):
-    pass
-
-
-def get_trader_group(trader_score):
-    pass
-
-
-def add_trader(first, last, score, crypto):
-    trader = {
-        "First_Name": first,
-        "Last_Name": last,
-        "Score": score,
-        "Current_Balance": crypto,
-    }
-
-    result = requests.put(
-        'http://127.0.0.1:5000/new',
-        headers={'content-type': 'application/json'},
-        data=json.dumps(trader)
+def get_trader_stat(investor_id):
+    result = requests.get(
+        'http://127.0.0.1:5000/user/{}'.format(investor_id),
+        headers={'content-type': 'application/json'}
     )
-
     return result.json()
+
+# this may not be required as new user is part of trading simulation
+# # def add_trader(first, last, score, crypto):
+# #     trader = {
+# #         "First_Name": first,
+# #         "Last_Name": last,
+# #         "Score": score,
+# #         "Current_Balance": crypto,
+# #     }
+
+#     result = requests.put(
+#         'http://127.0.0.1:5000/new',
+#         headers={'content-type': 'application/json'},
+#         data=json.dumps(trader)
+#     )
+
+#     return result.json()
 
 
 def run():
@@ -117,15 +141,16 @@ def views():
     print('To view the leaderboard, please type: leaderboard')
     print('To view all traders, please type: alltraders')
     selection = input('Please type here what you would like to view: ')
+    print(get_best_or_worst(selection))
 
-    if selection == 'best':
-        return get_best_trader(selection)
-    elif selection == 'worst':
-        return get_worst_trader
-    # elif selection == int:
-    #     return get_trader_stat(investor_id)
-    else:
-        return 'Please select an option from above'
+    # if selection == 'best':
+    #     return get_best_trader(selection)
+    # elif selection == 'worst':
+    #     return get_worst_trader
+    # # elif selection == int:
+    # #     return get_trader_stat(investor_id)
+    # else:
+    #     return 'Please select an option from above'
 
 
 if __name__ == '__main__':
