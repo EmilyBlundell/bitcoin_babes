@@ -39,10 +39,10 @@ def _map_values(traders):
     for profile in traders:
         print(profile)
         mapped.append({
-            'investor_first_name',
-            'investor_last_name',
-            'current_score',
-            'crypto_balance',
+            'investor_first_name':profile[0],
+            'investor_last_name':profile[1],
+            'current_score':profile[2],
+            'crypto_balance':profile[3],
         })
     return mapped
 
