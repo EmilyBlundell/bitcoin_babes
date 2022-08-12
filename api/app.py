@@ -36,17 +36,21 @@ def new_trader():
 
 
 @app.route('/user/<int:investor_id>')
-def get_user_info():
-    trader = request.get_json()
-    dbutils.get_trader_stat()
-    return trader
+def get_user_info(investor_id):
+    trader = dbutils.get_trader_stat(investor_id)
+    return jsonify(trader)
 
 
 @app.route('/allinvestors')
 def get_all_investors():
-    trader = request.get_json()
-    dbutils.display_all_traders()
-    return trader
+    trader = dbutils.display_all_traders()
+    return jsonify(trader)
+
+
+@app.route('/mostrecent')
+def get_recent_user():
+    trader = dbutils.get_recent_id()
+    return jsonify(trader)
 
 
 if __name__ == '__main__':
