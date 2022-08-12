@@ -1,7 +1,5 @@
 import unittest
-import requests, json
-from app import index
-from unittest.mock import patch
+
 
 
 URL = 'http://127.0.0.1:5000'
