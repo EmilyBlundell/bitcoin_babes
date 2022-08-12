@@ -39,10 +39,10 @@ def _map_values(traders):
     for profile in traders:
         print(profile)
         mapped.append({
-            'investor_first_name':profile[0],
-            'investor_last_name':profile[1],
-            'current_score':profile[2],
-            'crypto_balance':profile[3],
+            'investor_first_name': profile[1],
+            'investor_last_name': profile[2],
+            'current_score': profile[3],
+            'crypto_balance': profile[4],
         })
     return mapped
 
@@ -150,6 +150,7 @@ def get_trader_stat(investor_id):
             print('Connection Closed')
 
     return trader_stat
+
 
 def get_recent_id():
     try:

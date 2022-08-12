@@ -38,22 +38,14 @@ def new_trader():
 @app.route('/user/<int:investor_id>')
 def get_user_info():
     trader = request.get_json()
-    dbutils.get_trader_stat(
-        investor_id=trader['investor_id'],
-        first_name=trader['First_name'],
-        score=trader['score']
-    )
+    dbutils.get_trader_stat()
     return trader
 
 
 @app.route('/allinvestors')
 def get_all_investors():
     trader = request.get_json()
-    dbutils.display_all_traders(
-        investor_id=trader['investor_id'],
-        first_name=trader['First_name'],
-        score=trader['current_score']
-    )
+    dbutils.display_all_traders()
     return trader
 
 
