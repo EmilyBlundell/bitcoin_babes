@@ -1,50 +1,43 @@
-import requests
-import json
 from simulator import *
 from collections import namedtuple
 from api.db_utils import get_recent_id
+import requests
+import json
 
 
-def get_best_or_worst():
+def get_best_trader():
     result = requests.get(
-        '127.0.0.1:5000/leader/best',
+        'http://127.0.0.1:5000/leader/best',
         headers={'content-type': 'application/json'})
     return result.json()
 
 
 def get_worst_trader():
     result = requests.get(
-        '127.0.0.1:5000/leader/worst',
+        'http://127.0.0.1:5000/leader/worst',
         headers={'content-type': 'application/json'})
     return result.json()
-
-# def get_best_or_worst(selection):
-#     selection = selection.casefold()
-#     if selection == 'best':
-#         result_best = requests.get(
-#             '127.0.0.1:5000/leader/best',
-#             headers={'content-type': 'application/json'})
-#         return result_best.json()
-#     elif selection == 'worst':
-#         result_worst = requests.get(
-#             '127.0.0.1:5000/leader/worst',
-#             headers={'content-type': 'application/json'})
-#         return result_worst.json()
-#     else:
-#         return
 
 
 def display_all_traders(records):
     # Print the names of the columns.
-    print("{:<15} {:<15} {:<15} ".format(
-        'investor ID', 'current score', 'crypto balance'))
+    print("{:<20} {:<20} {:<20} {:<20} {:<20} ".format(
+        'investor ID', 'investor_first_name', 'investor_last_name', 'current score', 'currency'))
     print('-' * 105)
 
     # print each data item.
     for item in records:
-        print("{:<15} {:<15} {:<15} {:<15} ".format(
-            item['investor_id'], item['current_score'], item['crypto_balance']
+        print("{:<20} {:<20} {:<20} {:<20} {:<20} ".format(
+            item['investor_id'], item['investor_first_name'], item['investor_last_name'], item['current_score'],
+            item['currency']
         ))
+
+
+def get_all_traders():
+    result = requests.get(
+        'http://127.0.0.1:5000/allinvestors',
+        headers={'content-type': 'application/json'})
+    return result.json()
 
 
 def get_trader_stat(investor_id):
@@ -54,23 +47,25 @@ def get_trader_stat(investor_id):
     )
     return result.json()
 
-# this may not be required as new user is part of trading simulation
-# # def add_trader(first, last, score, crypto):
-# #     trader = {
-# #         "First_Name": first,
-# #         "Last_Name": last,
-# #         "Score": score,
-# #         "Current_Balance": crypto,
-# #     }
 
-#     result = requests.put(
-#         'http://127.0.0.1:5000/new',
-#         headers={'content-type': 'application/json'},
-#         data=json.dumps(trader)
-#     )
+def add_trader(new_id, first, last, score, crypto, currency):
+    trader = {
+        "investor_id": new_id,
+        "investor_first_name": first,
+        "investor_last_name": last,
+        "crypto_score": score,
+        "current_balance": crypto,
+        "currency": currency
 
-#     return result.json()
+    }
 
+    result = requests.put(
+        'http://127.0.0.1:5000/new',
+        headers={'content-type': 'application/json'},
+        data=json.dumps(trader)
+    )
+
+    return result.json()
 
 
 def run():
@@ -123,7 +118,7 @@ def run():
     print()
 
     new_trader = namedtuple(
-        'trader', ['id','first', 'last', 'score', 'crypto', 'currency'])
+        'trader', ['id', 'first', 'last', 'score', 'crypto', 'currency'])
 
     new_id = get_recent_id() + 1
 
@@ -135,6 +130,8 @@ def run():
     print('############################')
     print()
 
+    # add_trader(new_id, first, last, stock.score, stock.crypto, stock.currency) >> to add user to db
+
 
 def views():
     print('############################')
@@ -142,25 +139,25 @@ def views():
     print('To get the best trader, please type: best')
     print('To get the worst trader, please type: worst')
     print('To get a trader\'s stats, please type the trader\'s id number')
-    print('To view the leaderboard, please type: leaderboard')
-    print('To view all traders, please type: alltraders')
+    print('To view all traders, please type: all')
     selection = input('Please type here what you would like to view: ')
-    print(get_best_or_worst(selection))
-
-    # if selection == 'best':
-    #     return get_best_trader(selection)
-    # elif selection == 'worst':
-    #     return get_worst_trader
-    # # elif selection == int:
-    # #     return get_trader_stat(investor_id)
-    # else:
-    #     return 'Please select an option from above'
+    selection = selection.casefold()
+    if selection == 'best':
+        best_trader = get_best_trader()
+        display_all_traders(best_trader)
+    elif selection == 'worst':
+        worst_trader = get_worst_trader()
+        display_all_traders(worst_trader)
+    elif selection == int:
+        trader_stat = get_trader_stat(selection)
+        display_all_traders(trader_stat)
+    elif selection == 'all':
+        all_traders = get_all_traders()
+        display_all_traders(all_traders)
+    else:
+        return
 
 
 if __name__ == '__main__':
     run()
-
     views()
-
-# if run():
-#     return views()
