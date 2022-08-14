@@ -181,4 +181,4 @@ def main():
 
 
 if __name__ == "__main__":
-    add_trader(9, 'Jane', 'Doe', 6, 70, 'BNB')
+    main()
