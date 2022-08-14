@@ -99,6 +99,8 @@ def switch_currency(crypto, dig_currency):
     switch_currency = input(f'Would you like to exchange your current balance of {crypto} in {dig_currency} to another digital currency instead?\nEnter y or n')
 
     available_currencies = ['BTC', 'ETH', 'BNB', 'XRP']
+    
+    new_currency = dig_currency
 
     if switch_currency == 'y':
 
