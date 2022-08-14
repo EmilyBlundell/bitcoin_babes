@@ -104,24 +104,24 @@ def switch_currency(crypto, dig_currency):
 
         for currency in available_currencies:
 
-            url = f'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={dig_currency}&to_currency={currency}&apikey=W1YOUK71XA85OSKU'
-            r = requests.get(url)
-            data = r.json()
-            name = data["Realtime Currency Exchange Rate"]["4. To_Currency Name"]
-            abbreviation = data["Realtime Currency Exchange Rate"]["3. To_Currency Code"]
-            rate = data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
+            url = f'https://rest.coinapi.io/v1/exchangerate/{dig_currency}/{currency}'
+            headers = {'X-CoinAPI-Key': '45396587-1645-446A-B180-B88D3EF5654E'}
+            response = requests.get(url, headers=headers)
+            data = response.json()
+            name = data["asset_id_quote"]
+            rate = data["rate"]
 
 
-            print(f'Exchange rate from {dig_currency} to {name} ({abbreviation}) = {rate}')
+            print(f'Exchange rate from {dig_currency} to {name} = {rate}')
 
         new_currency = input('Enter the 3 letter code of the currency you would like to exchange to')
-        url = f'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency={new_currency}&apikey=W1YOUK71XA85OSKU'
-        r = requests.get(url)
-        data = r.json()
-        exchange_rate = float(data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        url = f'https://rest.coinapi.io/v1/exchangerate/{dig_currency}/{new_currency}'
+        headers = {'X-CoinAPI-Key': '45396587-1645-446A-B180-B88D3EF5654E'}
+        response = requests.get(url, headers=headers)
+        data = response.json()
+        exchange_rate = float(data["rate"])
         crypto = crypto * exchange_rate
+
         print(f'You now have {crypto} units of {new_currency}')
 
     return new_currency, crypto
-
-
