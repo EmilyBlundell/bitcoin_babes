@@ -1,6 +1,5 @@
 from simulator import *
 from collections import namedtuple
-from api.db_utils import get_recent_id
 import requests
 import json
 
@@ -45,6 +44,13 @@ def get_trader_stat(investor_id):
         'http://127.0.0.1:5000/user/{}'.format(investor_id),
         headers={'content-type': 'application/json'}
     )
+    return result.json()
+
+
+def get_new_trader_id():
+    result = requests.get(
+        'http://127.0.0.1:5000/recentid',
+        headers={'content-type': 'application/json'})
     return result.json()
 
 
@@ -120,7 +126,7 @@ def run():
     new_trader = namedtuple(
         'trader', ['id', 'first', 'last', 'score', 'crypto', 'currency'])
 
-    new_id = get_recent_id() + 1
+    new_id = get_new_trader_id() + 1
 
     newest_trader = new_trader(
         new_id, first, last, stock.score, stock.crypto, stock.currency)

@@ -52,6 +52,11 @@ def get_recent_user():
     trader = dbutils.get_recent_id()
     return jsonify(trader)
 
+@app.route('/recentid')
+def get_new_trader_id():
+    trader = dbutils.get_recent_id()
+    return jsonify(trader)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
