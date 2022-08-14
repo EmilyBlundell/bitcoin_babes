@@ -1,7 +1,9 @@
 import unittest
 
-
-
+"""
+The unittest is done to test the API endpoints if its up and running. 
+If its running, the test passes, if not, it fails.
+"""
 URL = 'http://127.0.0.1:5000'
 BEST_WORSE = 'http://127.0.0.1:5000/leader/selection'
 NEW_TRADER = 'http://127.0.0.1:5000/new'
