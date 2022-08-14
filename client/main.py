@@ -144,7 +144,7 @@ def run():
     print('############################')
     print()
 
-    add_trader(new_id, newest_trader.first, newest_trader.last, newest_trader.score, newest_trader.crypto, newest_trader.currency)
+    # add_trader(new_id, first, last, stock.score, stock.crypto, stock.currency) >> to add user to db
 
 
 # function to view if users would like to obtain the best or worst trader, all traders or a specific trader
@@ -171,7 +171,7 @@ def views():
         print('-' * 105)
         values = list(trader_stat.values())
         print("{:<20} {:<20} {:<20} {:<20} {:<20} ".format(
-            values[0], values[1], values[2], values[3], values[4]
+            values[2], values[3], values[5], values[0], values[1]
         ))
     elif selection == 'all':
         all_traders = get_all_traders()
