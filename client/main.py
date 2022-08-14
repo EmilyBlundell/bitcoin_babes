@@ -130,7 +130,7 @@ def run():
     print('############################')
     print()
 
-    # add_trader(new_id, first, last, stock.score, stock.crypto, stock.currency) >> to add user to db
+    add_trader(new_id, newest_trader.first, newest_trader.last, newest_trader.score, newest_trader.crypto, newest_trader.currency)
 
 
 def views():

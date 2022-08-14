@@ -27,10 +27,13 @@ def get_best_or_worst(selection):
 def new_trader():
     trader = request.get_json()
     dbutils.add_trader(
-        first=trader['First_Name'],
-        last=trader['Last_Name'],
-        score=trader['Score'],
-        crypto=trader['Current_Balance']
+
+        id=trader["investor_id"],
+        first=trader["investor_first_name"],
+        last=trader["investor_last_name"],
+        score=trader["current_score"],
+        crypto=trader["crypto_balance"],
+        currency = trader['currency']
     )
     return trader
 

@@ -98,13 +98,13 @@ def display_all_traders():
     return all_traders
 
 
-def add_trader(id, first, last, score, crypto):
+def add_trader(id, first, last, score, crypto, currency):
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
-        update_booking = """INSERT INTO investors_info 
-        VALUES({}, {}, {}, {},{})""".format(id, first, last, score, crypto)
-        cur.execute(update_booking)
+        update_trader = """INSERT INTO investors_info 
+        VALUES({}, {}, {}, {},{},{})""".format(id, first, last, score, crypto, currency)
+        cur.execute(update_trader)
 
         nanodb.commit()
         cur.close()
