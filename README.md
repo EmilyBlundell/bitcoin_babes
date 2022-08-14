@@ -10,6 +10,7 @@ We run this through the command line.
 1. Python 3
 2. The pip installer package
 3. MySQL
+4. An API key from https://www.coinapi.io is required 
 
 ## Installation
 
@@ -25,17 +26,17 @@ We run this through the command line.
 * itertools
 * math
 * unittest
-
-3. Go to MySQL and open the file called create_nano_db_script.sql and run the script
-4. Go to the config.py file and insert your password for MySQL
-5. In the command line/terminal, navigate to the folder containing the API files.
-6. Run the following command:
+3. Sign up for an API key with https://www.coinapi.io and add it to the simulator.py file
+4. Go to MySQL and open the file called create_nano_db_script.sql and run the script
+5. Go to the config.py file and insert your password for MySQL
+6. In the command line/terminal, navigate to the folder containing the API files.
+7. Run the following command:
 ```shell
 > export FLASK_ENV=development
 > flask run
 ```
-7. In the command line, run the main.py file
-8. Open your browser and open the urls with the different endpoints in the app.py file
+8. In the command line, run the main.py file
+9. Open your browser and open the urls with the different endpoints in the app.py file
 ## Authors
 
 Iman Kasmani, Emily Blundell, Rebecca Clarke, Promise Edah Frank and Amanda Gitau
