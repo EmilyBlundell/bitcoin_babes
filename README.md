@@ -9,6 +9,7 @@ We run this through the command line.
 
 1. Python 3
 2. The pip installer package
+3. MySQL
 
 ## Installation
 
@@ -23,6 +24,7 @@ We run this through the command line.
 * randon
 * itertools
 * math
+* unittest
 
 3. Go to MySQL and open the file called create_nano_db_script.sql and run the script
 4. Go to the config.py file and insert your password for MySQL
