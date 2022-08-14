@@ -6,6 +6,7 @@ class DbConnectionError(Exception):
     pass
 
 
+# function to connect to the mysql database
 def _connect_to_db(db_name):
     connect = mysql.connector.connect(
         host=HOST,
@@ -98,7 +99,7 @@ def display_all_traders():
     return all_traders
 
 
-def add_trader(id, first, last, score, crypto, currency):
+def add_trader(id, first, last, score, crypto):
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
