@@ -35,7 +35,7 @@ We run this through the command line.
 > flask run
 ```
 7. In the command line, run the main.py file
-
+8. Open your browser and open the urls with the different endpoints
 ## Authors
 
 Iman Kasmani, Emily Blundell, Rebecca Clarke, Promise Edah Frank and Amanda Gitau
