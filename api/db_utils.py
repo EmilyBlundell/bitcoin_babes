@@ -6,6 +6,7 @@ class DbConnectionError(Exception):
     pass
 
 
+# function to connect to the mysql database
 def _connect_to_db(db_name):
     connect = mysql.connector.connect(
         host=HOST,
@@ -16,6 +17,7 @@ def _connect_to_db(db_name):
     return connect
 
 
+# function to map the values to view in the API
 def _map_values(traders):
     mapped = []
     for profile in traders:
@@ -30,9 +32,7 @@ def _map_values(traders):
     return mapped
 
 
-# EXAMPLE 1 - Gets the trader/ traders with the highest score
-
-
+# function that gets the trader with the highest score
 def get_best_trader():
     try:
         nanodb = _connect_to_db('nano')
@@ -55,7 +55,7 @@ def get_best_trader():
     return best_trader
 
 
-# Gets the trader/ traders with the lowest score
+# Gets the trader with the lowest score
 def get_worst_trader():
     try:
         nanodb = _connect_to_db('nano')
@@ -78,6 +78,7 @@ def get_worst_trader():
     return worst_trader
 
 
+# gets all traders
 def display_all_traders():
     try:
         nanodb = _connect_to_db('nano')
@@ -98,6 +99,7 @@ def display_all_traders():
     return all_traders
 
 
+# function to add a new trader
 def add_trader(id, first, last, score, crypto):
     try:
         nanodb = _connect_to_db('nano')
@@ -115,6 +117,7 @@ def add_trader(id, first, last, score, crypto):
             nanodb.close()
 
 
+# function to get a specific trader's stats
 def get_trader_stat(investor_id):
     try:
         nanodb = _connect_to_db('nano')
@@ -140,6 +143,7 @@ def get_trader_stat(investor_id):
     return display_trader
 
 
+# function that gets the id number of the most recent trader to join
 def get_recent_id():
     try:
         nanodb = _connect_to_db('nano')
@@ -155,7 +159,7 @@ def get_recent_id():
         for i in result:
             for j in i:
                 last_id = j
-# replace double for loop
+
     except Exception:
         raise DbConnectionError("Failed to connect to the database")
     finally:

@@ -74,6 +74,7 @@ def add_trader(new_id, first, last, score, crypto, currency):
     return result.json()
 
 
+# function to run the trading simulation
 def run():
     print('############################')
     print('Welcome to Test Trade, the add-on for validating trading prowess')
@@ -139,6 +140,7 @@ def run():
     # add_trader(new_id, first, last, stock.score, stock.crypto, stock.currency) >> to add user to db
 
 
+# function to view if users would like to obtain the best or worst trader, all traders or a specific trader
 def views():
     print('############################')
     print()
@@ -154,7 +156,7 @@ def views():
     elif selection == 'worst':
         worst_trader = get_worst_trader()
         display_results(worst_trader)
-    elif selection == 2:
+    elif selection == int:
         trader_stat = get_trader_stat(selection)
         display_results(trader_stat)
     elif selection == 'all':
