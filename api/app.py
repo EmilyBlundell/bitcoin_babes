@@ -28,12 +28,12 @@ def new_trader():
     trader = request.get_json()
     dbutils.add_trader(
 
-        id=trader["investor_id"],
-        first=trader["investor_first_name"],
-        last=trader["investor_last_name"],
+        investor_id=trader["investor_id"],
+        first_name=trader["investor_first_name"],
+        last_name=trader["investor_last_name"],
         score=trader["current_score"],
         crypto=trader["crypto_balance"],
-        currency = trader['currency']
+        currency=trader['currency']
     )
     return trader
 

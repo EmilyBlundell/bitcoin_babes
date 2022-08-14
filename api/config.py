@@ -1,3 +1,3 @@
 HOST = "localhost"
 USER = "root"
-PASSWORD = "enter your SQL password here"
+PASSWORD = "nisa68.AA"

@@ -99,16 +99,20 @@ def display_all_traders():
     return all_traders
 
 
-def add_trader(id, first, last, score, crypto, currency):
+def add_trader(investor_id, first_name, last_name, score, crypto, currency):
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
         update_trader = """ 
-            CALL fillinvestor({}, {}, {}, {},{},{})""".format(id, first, last, score, crypto, currency)
+            CALL fillinvestor({investor_id}, '{investor_first_name}', '{investor_last_name}', {current_score}, 
+            {crypto_balance}, '{currency}')""".format(investor_id=investor_id, investor_first_name=first_name,
+                                                      investor_last_name=last_name, current_score=score,
+                                                      crypto_balance=crypto, currency=currency)
         cur.execute(update_trader)
-
+        print(update_trader)
         nanodb.commit()
         cur.close()
+
     except Exception:
         raise DbConnectionError("DB connection failed")
     finally:
@@ -120,7 +124,7 @@ def get_trader_stat(investor_id):
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
-        query = """ 
+        query = """
         SELECT *
         FROM investors_info
         WHERE investor_id = {}; """.format(investor_id)
@@ -156,7 +160,7 @@ def get_recent_id():
         for i in result:
             for j in i:
                 last_id = j
-# replace double for loop
+
     except Exception:
         raise DbConnectionError("Failed to connect to the database")
     finally:
@@ -177,4 +181,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    add_trader(9, 'Jane', 'Doe', 6, 70, 'BNB')
