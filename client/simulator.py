@@ -107,7 +107,7 @@ def switch_currency(crypto, dig_currency):
         for currency in available_currencies:
 
             url = f'https://rest.coinapi.io/v1/exchangerate/{dig_currency}/{currency}'
-            headers = {'X-CoinAPI-Key': '45396587-1645-446A-B180-B88D3EF5654E'}
+            headers = {'X-CoinAPI-Key': '7C8B7841-31F2-49BC-A53D-FDED46C990BE'}
             response = requests.get(url, headers=headers)
             data = response.json()
             name = data["asset_id_quote"]
@@ -116,9 +116,10 @@ def switch_currency(crypto, dig_currency):
 
             print(f'Exchange rate from {dig_currency} to {name} = {rate}')
 
+
         new_currency = input('Enter the 3 letter code of the currency you would like to exchange to')
         url = f'https://rest.coinapi.io/v1/exchangerate/{dig_currency}/{new_currency}'
-        headers = {'X-CoinAPI-Key': '45396587-1645-446A-B180-B88D3EF5654E'}
+        headers = {'X-CoinAPI-Key': '7C8B7841-31F2-49BC-A53D-FDED46C990BE'}
         response = requests.get(url, headers=headers)
         data = response.json()
         exchange_rate = float(data["rate"])
