@@ -4,6 +4,7 @@ import requests
 import json
 
 
+# function to get the best trader
 def get_best_trader():
     result = requests.get(
         'http://127.0.0.1:5000/leader/best',
@@ -11,6 +12,7 @@ def get_best_trader():
     return result.json()
 
 
+# function to get the worst trader
 def get_worst_trader():
     result = requests.get(
         'http://127.0.0.1:5000/leader/worst',
@@ -18,7 +20,8 @@ def get_worst_trader():
     return result.json()
 
 
-def display_all_traders(records):
+# function to format the display of results
+def display_results(records):
     # Print the names of the columns.
     print("{:<20} {:<20} {:<20} {:<20} {:<20} ".format(
         'investor ID', 'investor_first_name', 'investor_last_name', 'current score', 'currency'))
@@ -32,6 +35,7 @@ def display_all_traders(records):
         ))
 
 
+# function to get all traders
 def get_all_traders():
     result = requests.get(
         'http://127.0.0.1:5000/allinvestors',
@@ -39,12 +43,13 @@ def get_all_traders():
     return result.json()
 
 
+# function to get individual trader stats with their investor id number
 def get_trader_stat(investor_id):
     result = requests.get(
         'http://127.0.0.1:5000/user/{}'.format(investor_id),
         headers={'content-type': 'application/json'}
     )
-    return result.json()
+    return result.json
 
 
 def get_new_trader_id():
@@ -54,6 +59,7 @@ def get_new_trader_id():
     return result.json()
 
 
+# function to add a new trader
 def add_trader(new_id, first, last, score, crypto, currency):
     trader = {
         "investor_id": new_id,
@@ -74,6 +80,7 @@ def add_trader(new_id, first, last, score, crypto, currency):
     return result.json()
 
 
+# function to run the trading simulation
 def run():
     print('############################')
     print('Welcome to Test Trade, the add-on for validating trading prowess')
@@ -139,6 +146,7 @@ def run():
     # add_trader(new_id, first, last, stock.score, stock.crypto, stock.currency) >> to add user to db
 
 
+# function to view if users would like to obtain the best or worst trader, all traders or a specific trader
 def views():
     print('############################')
     print()
@@ -150,16 +158,16 @@ def views():
     selection = selection.casefold()
     if selection == 'best':
         best_trader = get_best_trader()
-        display_all_traders(best_trader)
+        display_results(best_trader)
     elif selection == 'worst':
         worst_trader = get_worst_trader()
-        display_all_traders(worst_trader)
+        display_results(worst_trader)
     elif selection == int:
         trader_stat = get_trader_stat(selection)
-        display_all_traders(trader_stat)
+        display_results(trader_stat)
     elif selection == 'all':
         all_traders = get_all_traders()
-        display_all_traders(all_traders)
+        display_results(all_traders)
     else:
         return
 
