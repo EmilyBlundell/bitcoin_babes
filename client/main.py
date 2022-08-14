@@ -49,7 +49,8 @@ def get_trader_stat(investor_id):
         'http://127.0.0.1:5000/user/{}'.format(investor_id),
         headers={'content-type': 'application/json'}
     )
-    return result.json
+    trader_info = json.loads(result.text)
+    return trader_info
 
 
 def get_new_trader_id():
@@ -152,7 +153,7 @@ def views():
     print()
     print('To get the best trader, please type: best')
     print('To get the worst trader, please type: worst')
-    print('To get a trader\'s stats, please type the trader\'s id number')
+    print('To get a trader\'s stats, please type: trader stats')
     print('To view all traders, please type: all')
     selection = input('Please type here what you would like to view: ')
     selection = selection.casefold()
@@ -162,9 +163,16 @@ def views():
     elif selection == 'worst':
         worst_trader = get_worst_trader()
         display_results(worst_trader)
-    elif selection == int:
-        trader_stat = get_trader_stat(selection)
-        display_results(trader_stat)
+    elif selection == 'trader stats':
+        id_number = input('Please type the trader\'s id number: ')
+        trader_stat = get_trader_stat(id_number)
+        print("{:<20} {:<20} {:<20} {:<20} {:<20} ".format(
+            'investor ID', 'investor_first_name', 'investor_last_name', 'current score', 'currency'))
+        print('-' * 105)
+        values = list(trader_stat.values())
+        print("{:<20} {:<20} {:<20} {:<20} {:<20} ".format(
+            values[0], values[1], values[2], values[3], values[4]
+        ))
     elif selection == 'all':
         all_traders = get_all_traders()
         display_results(all_traders)
