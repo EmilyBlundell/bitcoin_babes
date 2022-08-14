@@ -99,12 +99,12 @@ def display_all_traders():
     return all_traders
 
 
-def add_trader(id, first, last, score, crypto):
+def add_trader(id, first, last, score, crypto, currency):
     try:
         nanodb = _connect_to_db('nano')
         cur = nanodb.cursor()
-        update_trader = """INSERT INTO investors_info 
-        VALUES({}, {}, {}, {},{},{})""".format(id, first, last, score, crypto, currency)
+        update_trader = """ 
+            CALL fillinvestor({}, {}, {}, {},{},{})""".format(id, first, last, score, crypto, currency)
         cur.execute(update_trader)
 
         nanodb.commit()
@@ -172,7 +172,7 @@ def main():
     print(get_worst_trader())
     print(display_all_traders())
     print(add_trader())
-    print(get_trader_stat(2))
+    print(get_trader_stat())
     print(get_recent_id())
 
 

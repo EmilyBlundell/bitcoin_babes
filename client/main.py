@@ -94,8 +94,8 @@ def run():
     print('############################')
     print()
 
-    first = input('Please enter your first name')
-    last = input('Please enter your last name')
+    first = input('Please enter your first name ')
+    last = input('Please enter your last name ')
     print('############################')
     print()
 
